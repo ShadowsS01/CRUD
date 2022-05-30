@@ -25,18 +25,32 @@ if (loggedUser === null) {
   $formCriaUser.addEventListener("submit", function criaUserController(e) {
     e.preventDefault();
     if ($campoCriaUser.value == "") {
-      alert("Campo cria usuário não pode ser vazio!");
+      error = "Campo cria usuário não pode ser vazio!";
+      $formCriaUser.insertAdjacentHTML(
+        "beforeend",
+        `
+        <span class="text-red-600 selection:bg-red-600/20 text-center">${error}</span>
+      `
+      );
     } else {
-      alert(`Usuário ${$campoCriaUser.value} criado com sucesso.`);
+      success = `Usuário ${$campoCriaUser.value} criado com sucesso.`;
       localStorage.setItem("LoggedUser", $campoCriaUser.value);
-      window.location.reload();
+      $formCriaUser.insertAdjacentHTML(
+        "beforeend",
+        `
+        <span class="text-green-600 selection:bg-green-600/20 text-center">${success}</span>
+      `
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   });
 } else {
   $forms.insertAdjacentHTML(
     "afterbegin",
     `
-      <div id="loggedUser" class="flex flex-row space-x-3 items-center justify-center">
+      <div id="loggedUser" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 items-center justify-center text-center">
         <span>Você está logado como: 
           <span class="underline underline-offset-2 text-blue-600">${loggedUser}</span>
         </span>
