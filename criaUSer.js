@@ -16,31 +16,31 @@ if (loggedUser === null) {
       >
         Criar usuário
       </button>
+      <span id="msgInfo" class="text-center hidden"></span>
     </form>
   `
   );
 
   const $formCriaUser = document.querySelector("#formCriaUser");
   const $campoCriaUser = document.querySelector('input[name="campoCriaUser"]');
+  const $msgInfo = document.querySelector("#msgInfo");
   $formCriaUser.addEventListener("submit", function criaUserController(e) {
     e.preventDefault();
     if ($campoCriaUser.value == "") {
-      error = "Campo cria usuário não pode ser vazio!";
-      $formCriaUser.insertAdjacentHTML(
-        "beforeend",
-        `
-        <span class="text-red-600 selection:bg-red-600/20 text-center">${error}</span>
-      `
-      );
+      msgInfo = "Campo cria usuário não pode ser vazio!";
+      if (!$msgInfo) {
+        alert("Erro na página");
+        window.location.reload();
+      }
+      $msgInfo.classList.add("text-red-600", "selection:bg-red-600/20");
+      $msgInfo.classList.remove("hidden");
+      $msgInfo.innerHTML = msgInfo;
     } else {
-      success = `Usuário ${$campoCriaUser.value} criado com sucesso.`;
+      msgInfo = `Usuário ${$campoCriaUser.value} criado com sucesso.`;
       localStorage.setItem("LoggedUser", $campoCriaUser.value);
-      $formCriaUser.insertAdjacentHTML(
-        "beforeend",
-        `
-        <span class="text-green-600 selection:bg-green-600/20 text-center">${success}</span>
-      `
-      );
+      $msgInfo.classList.add("text-green-600", "selection:bg-green-600/20");
+      $msgInfo.classList.remove("hidden");
+      $msgInfo.innerHTML = msgInfo;
       setTimeout(() => {
         window.location.reload();
       }, 1000);

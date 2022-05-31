@@ -97,18 +97,22 @@ $formCriaPost.addEventListener(
     const $campoCriaPost = document.querySelector(
       'input[name="campoCriaPost"]'
     );
+    const $msgInfo = document.querySelector("#msgInfo");
     if (!$campoCriaPost) {
       alert("Erro na página");
       window.location.reload();
     } else if ($campoCriaPost.value === "") {
-      alert("Digite algo");
+      msgInfo = "Digite algo";
+      $msgInfo.classList.add("text-red-600", "selection:bg-red-600/20");
+      $msgInfo.classList.remove("hidden");
+      $msgInfo.innerHTML = msgInfo;
     } else {
+      $msgInfo.classList.add("hidden");
       miniRedeSocial.criaPost({
         owner: loggedUser,
         content: $campoCriaPost.value,
       });
     }
-
     $campoCriaPost.value = "";
   }
 );
